@@ -1,13 +1,14 @@
 package com.apidemo.productservice.services;
 
 import com.apidemo.productservice.dtos.FakeStoreProductDTO;
+import com.apidemo.productservice.exceptions.ProductNotFoundException;
 import com.apidemo.productservice.models.Product;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface ProductService {
-    Product getProductById(Long id);
+    Product getProductById(Long id) throws ProductNotFoundException;
     ResponseEntity<FakeStoreProductDTO> addProduct(FakeStoreProductDTO fakeStoreProductDTO);
     List<Product> getAllProducts();
     ResponseEntity<Product> updateProduct(FakeStoreProductDTO fakeStoreProductDTO,Long id);
