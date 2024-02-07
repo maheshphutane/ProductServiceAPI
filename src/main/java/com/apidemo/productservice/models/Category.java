@@ -14,7 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Category extends BaseModel{
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "category" , cascade = CascadeType.REMOVE)
+    // being already mapped by an attribute called category
     private List<Product> productList;
     private String name;
     private String description;
