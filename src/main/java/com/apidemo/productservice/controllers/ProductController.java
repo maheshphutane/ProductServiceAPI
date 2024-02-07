@@ -1,20 +1,21 @@
 package com.apidemo.productservice.controllers;
 
-import com.apidemo.productservice.dtos.FakeStoreProductDTO;
+import com.apidemo.productservice.dtos.ProductDTO;
 import com.apidemo.productservice.exceptions.ProductNotFoundException;
 import com.apidemo.productservice.models.Product;
 import com.apidemo.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
+    @Qualifier("SelfProductService")
     private ProductService productService;
     @GetMapping
     public List<Product> getAllProducts(){
@@ -25,8 +26,8 @@ public class ProductController {
         return productService.getProductById(id);
     }
     @PostMapping
-    public ResponseEntity<FakeStoreProductDTO> addProduct(@RequestBody FakeStoreProductDTO fakeStoreProductDTO){
-        return productService.addProduct(fakeStoreProductDTO);
+    public ResponseEntity<Product> addProduct(@RequestBody Product product){
+        return productService.addProduct(product);
     }
 //    Not Supported by API
 //    @PatchMapping("/{id}")
@@ -34,8 +35,8 @@ public class ProductController {
 //        return productService.updateProduct(fakeStoreProductDTO,id);
 //    }
     @PutMapping("{id}")
-    public Product replaceProductById(@PathVariable("id") Long id,@RequestBody FakeStoreProductDTO fakeStoreProductDTO){
-        return productService.replaceProduct(fakeStoreProductDTO,id);
+    public Product replaceProductById(@PathVariable("id") Long id,@RequestBody ProductDTO productDTO){
+        return productService.replaceProduct(productDTO,id);
     }
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable("id") Long id){
