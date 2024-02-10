@@ -35,7 +35,7 @@ public class ProductController {
 //        return productService.updateProduct(fakeStoreProductDTO,id);
 //    }
     @PutMapping("{id}")
-    public Product replaceProductById(@PathVariable("id") Long id,@RequestBody ProductDTO productDTO){
+    public Product replaceProductById(@PathVariable("id") Long id,@RequestBody ProductDTO productDTO) throws ProductNotFoundException {
         return productService.replaceProduct(productDTO,id);
     }
     @DeleteMapping("/{id}")

@@ -8,19 +8,20 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findProductByTitleContaining(String word);
-    Product findProductById(Long id);
+    Optional<Product> findProductById(Long id);
     List<Product> findProductByCategory_Id(Long id);
     List<Product> findAll();
 
     //HQL Example with projections
-    @Query("select p.id as Id, p.title as Title from Product p where p.id = :id")
+    @Query("select p.id as id, p.title as title from Product p where p.id = :id")
     List<ProductWithIdAndTitle> customerHQLQuery(@Param("id") Long id);
 
     //Native Query Example
-    @Query(value = "select * from product p where p.id = :id")
+    @Query(value = "select p from product p where p.id = :id",nativeQuery = true)
     Product getMyProduct(@Param("id")Long id);
 }

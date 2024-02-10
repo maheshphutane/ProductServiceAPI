@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +25,11 @@ public class SelfProductService implements ProductService{
     private CategoryRepository categoryRepository;
     @Override
     public Product getProductById(Long id) throws ProductNotFoundException {
-        return productRepository.findProductById(id);
+        Optional<Product> productOptional = productRepository.findProductById(id);
+        if(productOptional.isPresent()){
+            return productOptional.get();
+        }
+        throw new ProductNotFoundException("Product Not Found for the given Id");
     }
 
     @Override
@@ -31,6 +37,7 @@ public class SelfProductService implements ProductService{
     public ResponseEntity<Product> addProduct(Product product) {
         Optional<Category> categoryOptional = categoryRepository.findByName(product.getCategory().getName());
         categoryOptional.ifPresent(product::setCategory);
+        product.setCreatedAt(Date.valueOf(LocalDate.now()));
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
     }
 
@@ -40,18 +47,28 @@ public class SelfProductService implements ProductService{
     }
 
     @Override
-    public ResponseEntity<Product> updateProduct(ProductDTO productDTO, Long id) {
-//        productDTO.setId(id);
-        Product product = convertDTOToProduct(productDTO);
-        return new ResponseEntity<>(productRepository.save(product),HttpStatus.OK);
+    public ResponseEntity<Product> updateProduct(ProductDTO productDTO, Long id) throws ProductNotFoundException {
+        Optional<Product> productOptional = productRepository.findProductById(id);
+        if(productOptional.isPresent()) {
+            Product product = convertDTOToProduct(productDTO);
+            product.setCreatedAt(Date.valueOf(LocalDate.now()));
+            return new ResponseEntity<>(productRepository.save(product),HttpStatus.OK);
+        }else{
+            throw new ProductNotFoundException("Product with id: "+id +" Not Found");
+        }
     }
 
     @Override
     @Transactional
-    public Product replaceProduct(ProductDTO productDTO, Long id) {
-//        productDTO.setId(id);
-        Product product = convertDTOToProduct(productDTO);
-        return productRepository.save(product);
+    public Product replaceProduct(ProductDTO productDTO, Long id) throws ProductNotFoundException {
+        Optional<Product> productOptional = productRepository.findProductById(id);
+        if(productOptional.isPresent()) {
+            Product product = convertDTOToProduct(productDTO);
+            product.setCreatedAt(Date.valueOf(LocalDate.now()));
+            return productRepository.save(product);
+        }else{
+            throw new ProductNotFoundException("Product with id :"+id +" Not Found");
+        }
     }
     private Product convertDTOToProduct(ProductDTO productDTO){
         Product product = new Product();
