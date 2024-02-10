@@ -18,8 +18,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findAll();
 
     //HQL Example with projections
-    @Query("select p.id as id, p.title as title from Product p where p.id = ?1")
-    List<ProductWithIdAndTitle> customerHQLQuery(Long id);
+    @Query("select p.id as id, p.title as title from Product p where p.id = :id")
+    List<ProductWithIdAndTitle> customerHQLQuery(@Param("id") Long id);
 
     //Native Query Example
     @Query(value = "select p from product p where p.id = :id",nativeQuery = true)
