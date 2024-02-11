@@ -38,7 +38,7 @@ public class ProductController {
         return productService.replaceProduct(productDTO,id);
     }
     @DeleteMapping("/{id}")
-    public void deleteProductById(@PathVariable("id") Long id){
-
+    public ResponseEntity<Void> deleteProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
+        return productService.deleteProductById(id);
     }
 }

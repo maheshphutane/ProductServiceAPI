@@ -70,6 +70,18 @@ public class SelfProductService implements ProductService{
             throw new ProductNotFoundException("Product with id :"+id +" Not Found");
         }
     }
+
+    @Override
+    public ResponseEntity<Void> deleteProductById(Long id) throws ProductNotFoundException {
+        Optional<Product> productOptional = productRepository.findProductById(id);
+        if(productOptional.isPresent()){
+            productRepository.deleteProductById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            throw new ProductNotFoundException("Product with id : "+id+" Not Found");
+        }
+    }
+
     private Product convertDTOToProduct(ProductDTO productDTO){
         Product product = new Product();
         product.setDescription(productDTO.getDescription());

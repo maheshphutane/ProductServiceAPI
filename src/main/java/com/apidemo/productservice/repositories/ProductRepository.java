@@ -16,6 +16,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     Optional<Product> findProductById(Long id);
     List<Product> findProductByCategory_Id(Long id);
     List<Product> findAll();
+    void deleteProductById(Long id);
 
     //HQL Example with projections
     @Query("select p.id as id, p.title as title from Product p where p.id = :id")

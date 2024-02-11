@@ -19,4 +19,5 @@ public interface ProductService {
 
     Product replaceProduct(ProductDTO productDTO, Long id) throws ProductNotFoundException;
 
+    ResponseEntity<Void> deleteProductById(Long id) throws ProductNotFoundException;
 }
