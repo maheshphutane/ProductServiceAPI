@@ -12,7 +12,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class Category extends BaseModel{
     @OneToMany(mappedBy = "category" , cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
@@ -21,9 +20,6 @@ public class Category extends BaseModel{
     private String name;
     private String description;
     private String imageUrl;
-    public Category(String name){
-        this.name = name;
-    }
 }
 
 //CascadeType.REMOVE : Will remove all the products of the respective which is removed

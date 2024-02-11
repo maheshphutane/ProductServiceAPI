@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity(name = "jt_instructor")
 @Getter
 @Setter
-@PrimaryKeyJoinColumn()
+@PrimaryKeyJoinColumn(name = "user_id")
 public class Instructor extends User {
     private double avgRating;
 }

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@DiscriminatorValue(value = "INSTRUCTOR")
+@DiscriminatorValue(value = "2")
 public class Instructor extends User {
     private double avgRating;
 }

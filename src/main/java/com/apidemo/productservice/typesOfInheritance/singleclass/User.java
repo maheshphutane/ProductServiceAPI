@@ -10,9 +10,9 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
         name = "USER_TYPE",
-        discriminatorType = DiscriminatorType.STRING
+        discriminatorType = DiscriminatorType.INTEGER
 )
-@DiscriminatorValue(value = "USER")
+@DiscriminatorValue(value = "0")
 public class User {
     @Id
     private Long id;

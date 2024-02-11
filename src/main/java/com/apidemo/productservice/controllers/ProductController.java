@@ -29,11 +29,10 @@ public class ProductController {
     public ResponseEntity<Product> addProduct(@RequestBody Product product){
         return productService.addProduct(product);
     }
-//    Not Supported by API
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<Product> updateProductById(@PathVariable("id") Long id, @RequestBody FakeStoreProductDTO fakeStoreProductDTO){
-//        return productService.updateProduct(fakeStoreProductDTO,id);
-//    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Product> updateProductById(@PathVariable("id") Long id, @RequestBody ProductDTO product) throws ProductNotFoundException {
+        return productService.updateProduct(product,id);
+    }
     @PutMapping("{id}")
     public Product replaceProductById(@PathVariable("id") Long id,@RequestBody ProductDTO productDTO) throws ProductNotFoundException {
         return productService.replaceProduct(productDTO,id);
