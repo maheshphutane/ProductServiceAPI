@@ -61,6 +61,11 @@ public class FakeStoreProductService implements ProductService{
         return convertDTOToProduct(productDTO1);
     }
 
+    @Override
+    public ResponseEntity<Void> deleteProductById(Long id) throws ProductNotFoundException {
+        return null;
+    }
+
     private Product convertDTOToProduct(ProductDTO productDTO){
         Product product = new Product();
 //        product.setId(productDTO.getId());

@@ -7,6 +7,7 @@ import com.apidemo.productservice.models.Product;
 import com.apidemo.productservice.repositories.CategoryRepository;
 import com.apidemo.productservice.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Primary
 @Service("SelfProductService")
 public class SelfProductService implements ProductService{
     @Autowired
@@ -36,7 +38,16 @@ public class SelfProductService implements ProductService{
     @Transactional
     public ResponseEntity<Product> addProduct(Product product) {
         Optional<Category> categoryOptional = categoryRepository.findByName(product.getCategory().getName());
-        categoryOptional.ifPresent(product::setCategory);
+        if(categoryOptional.isPresent()) {
+            product.setCategory(categoryOptional.get());
+        }
+       else{
+//            Category category = product.getCategory();
+//            category.setCreatedAt(Date.valueOf(LocalDate.now()));
+//            category.setProductList(new ArrayList<>());
+//            category.getProductList().add(product);
+//            categoryRepository.save(category);
+        }
         product.setCreatedAt(Date.valueOf(LocalDate.now()));
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
     }

@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 public class Category extends BaseModel{
-    @OneToMany(mappedBy = "category" , cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category" , cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     // being already mapped by an attribute called category
     private List<Product> productList;
     private String name;
