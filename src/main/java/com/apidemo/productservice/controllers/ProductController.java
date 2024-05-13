@@ -3,9 +3,11 @@ package com.apidemo.productservice.controllers;
 import com.apidemo.productservice.dtos.ProductDTO;
 import com.apidemo.productservice.exceptions.ProductNotFoundException;
 import com.apidemo.productservice.models.Product;
+import com.apidemo.productservice.services.AuthenticationCommons;
 import com.apidemo.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +17,11 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
-    @Qualifier("SelfProductService")
+    @Qualifier("FakeStoreProductService")
     private ProductService productService;
+
+//    @Autowired
+//    private AuthenticationCommons  authenticationCommons;
     @GetMapping
     public List<Product> getAllProducts(){
         return productService.getAllProducts();

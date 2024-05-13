@@ -5,6 +5,7 @@ import com.apidemo.productservice.exceptions.ProductNotFoundException;
 import com.apidemo.productservice.models.Category;
 import com.apidemo.productservice.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,23 @@ public class FakeStoreProductService implements ProductService{
 
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public Product getProductById(Long id) throws ProductNotFoundException {
+        Product p = (Product) redisTemplate.opsForHash().get("PRODUCTS","P_"+id);
+        if(p!=null){
+            return p;
+        }
         ProductDTO productDTO = restTemplate.getForObject("https://fakestoreapi.com/products/"+id, ProductDTO.class);
+
         if(productDTO == null){
             throw new ProductNotFoundException("Product with Id: "+id+" Not Found.");
         }
-        return convertDTOToProduct(productDTO);
+        Product product = convertDTOToProduct(productDTO);
+        redisTemplate.opsForHash().put("PRODUCTS","P_"+id,product);
+        return product;
     }
 
     @Override

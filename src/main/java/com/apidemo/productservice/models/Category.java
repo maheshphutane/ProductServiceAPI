@@ -1,5 +1,6 @@
 package com.apidemo.productservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 public class Category extends BaseModel{
+    @JsonIgnore
     @OneToMany(mappedBy = "category" , cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     // being already mapped by an attribute called category
     private List<Product> productList;
