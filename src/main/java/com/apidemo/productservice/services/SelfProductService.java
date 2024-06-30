@@ -4,10 +4,12 @@ import com.apidemo.productservice.dtos.ProductDTO;
 import com.apidemo.productservice.exceptions.ProductNotFoundException;
 import com.apidemo.productservice.models.Category;
 import com.apidemo.productservice.models.Product;
-import com.apidemo.productservice.repositories.CategoryRepository;
-import com.apidemo.productservice.repositories.ProductRepository;
+import com.apidemo.productservice.repositories.jpa.CategoryRepository;
+import com.apidemo.productservice.repositories.jpa.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 @Primary
 @Service("SelfProductService")
@@ -53,8 +53,8 @@ public class SelfProductService implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
+        return productRepository.findAll(PageRequest.of(pageNumber,pageSize));
     }
 
     @Override

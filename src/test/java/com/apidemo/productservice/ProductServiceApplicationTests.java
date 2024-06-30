@@ -1,15 +1,6 @@
 package com.apidemo.productservice;
 
-import com.apidemo.productservice.repositories.CategoryRepository;
-import com.apidemo.productservice.repositories.ProductRepository;
-import com.apidemo.productservice.repositories.projections.ProductWithIdAndTitle;
-import com.apidemo.productservice.services.ProductService;
-import org.junit.Ignore;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 class ProductServiceApplicationTests {

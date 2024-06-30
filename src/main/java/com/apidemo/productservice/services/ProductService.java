@@ -3,6 +3,7 @@ package com.apidemo.productservice.services;
 import com.apidemo.productservice.dtos.ProductDTO;
 import com.apidemo.productservice.exceptions.ProductNotFoundException;
 import com.apidemo.productservice.models.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ public interface ProductService {
     @Transactional
     ResponseEntity<Product> addProduct(Product product);
 
-    List<Product> getAllProducts();
+    Page<Product> getAllProducts(int pageNumber, int pageSize);
     ResponseEntity<Product> updateProduct(ProductDTO productDTO, Long id) throws ProductNotFoundException;
 
     Product replaceProduct(ProductDTO productDTO, Long id) throws ProductNotFoundException;

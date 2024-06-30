@@ -5,6 +5,8 @@ import com.apidemo.productservice.exceptions.ProductNotFoundException;
 import com.apidemo.productservice.models.Category;
 import com.apidemo.productservice.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -48,13 +50,13 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
         ProductDTO[] productList = restTemplate.getForObject("https://fakestoreapi.com/products", ProductDTO[].class);
         List<Product> ans = new ArrayList<>();
         for(ProductDTO productDTO : productList){
             ans.add(convertDTOToProduct(productDTO));
         }
-        return ans;
+        return new PageImpl<>(ans);
     }
 
     @Override

@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Getter
 @Setter
 @Entity
+@Document(indexName = "product")
 public class Product extends BaseModel implements Serializable {
     private String title;
     private Double price;

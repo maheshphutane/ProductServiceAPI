@@ -7,6 +7,7 @@ import com.apidemo.productservice.services.AuthenticationCommons;
 import com.apidemo.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +18,15 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
-    @Qualifier("FakeStoreProductService")
+    @Qualifier("SelfProductService")
     private ProductService productService;
 
 //    @Autowired
 //    private AuthenticationCommons  authenticationCommons;
     @GetMapping
-    public List<Product> getAllProducts(){
-        return productService.getAllProducts();
+    public Page<Product> getAllProducts(@RequestParam(value = "pageNumber",defaultValue = "0") int pageNumber,
+                                        @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
+        return productService.getAllProducts(pageNumber,pageSize);
     }
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
